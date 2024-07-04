@@ -167,4 +167,19 @@ def paymentMethod(namaPelanggan: str, totalBayar: float, diskon: float):
 def getTotalOrangReserved(tanggal: int, bulan: int, tahun: str) -> int:
     return sum(reservasi.banyakOrang for reservasi in daftarReservasi if reservasi.tanggal == tanggal and reservasi.bulan == bulan and reservasi.tahun == tahun)
 
-def reservationEvent(namaP
+def reservationEvent(namaPelanggan: str):
+    global banyakOrang
+    tanggal = int(input("Silakan input tanggal reservasi: "))
+    bulan = int(input("Silakan input bulan reservasi: "))
+    tahun = input("Silakan input tahun reservasi: ")
+    banyakOrang = int(input("Berapa orang yang akan mengikuti event ini? "))
+    while banyakOrang + getTotalOrangReserved(tanggal, bulan, tahun) > kapasitasReservasi:
+        print(f"Kapasitas event tinggal {kapasitasReservasi - getTotalOrangReserved(tanggal, bulan, tahun)}")
+        banyakOrang = int(input("Berapa orang yang akan mengikuti event ini? "))
+    daftarReservasi.append(Reservasi(banyakOrang, tanggal, bulan, tahun))
+    if banyakOrang >= 10:
+        getDiskon += 0.1
+    print("Reservasi berhasil dilakukan.")
+
+# Example of usage
+rolePelanggan()
